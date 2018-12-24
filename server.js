@@ -1,39 +1,70 @@
 const express = require("express");
 const logger = require("morgan");
-const mongoose = require("mongoose");
-
-//Our scraping tools
-//Axios is a promised-based http library, similar to jQuery's Ajax method
-//It works on the client and on the server
+let mongoose = require("mongoose");
+const exphbs = require("express-handlebars");
 const axios = require("axios");
 const cheerio = require("cheerio");
+const request = require("request");
+const bodyParser = require("body-parser");
 
 //Require all models
 const db = require("./models");
 
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 //Initialize Express
-const app = express();
+let app = express();
 
 //Configue middleware
 
 //Use morgan logger for logging requests
 app.use(logger("dev"));
 //Parse request body as JSON
-app.use(express.urlencoded({
+app.use(bodyParser.urlencoded({
     extended: true
 }));
-app.use(express.json());
+app.use(bodyParser.json());
 //Make public static folder
 app.use(express.static("public"));
 
-//Connect to the Mongo DB
-mongoose.connect("mongodb://localhost/mongoDB_scraper", {
-    useNewUrlParser: true
+
+// Set Handlebars
+// app.set("views", "./public/views");
+app.engine("handlebars", exphbs({ defaultLayout: "main"}));
+app.set("view engine", "handlebars");
+
+// get route to root, for handlebars to utilize db data
+app.get("/", (req, res) => {
+    db.Article
+    .find({})
+    .then(articles => res.render("index", {articles}))
+    .catch(err=> res.json(err));
 });
 
-//Routes
+// get route to saved, for handlebars to utilize db data
+app.get("/saved", (req, res) => {
+    db.Article
+    .find({})
+    .then(articles => res.render("saved", {articles}))
+    .catch(err=> res.json(err));
+});
+
+//Connect to the Mongo DB
+// if deployed, use the deployed database. Otherwise use the local database
+const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoDB_scraper";
+
+// Set mongoose to leverage built in JS ES6 promises
+// Connect to the Mongo DB
+mongoose.Promise = Promise;
+mongoose.connect(MONGODB_URI);
+
+// app.get("/", function(req, res) {
+//     res.render("index");
+// });
+
+// app.get("/saved", function(req, res){
+//     res.render("saved");
+// })
 
 //A GET route for scraping the "_______" website
 app.get("/scrape", function (req, res) {
@@ -49,9 +80,11 @@ app.get("/scrape", function (req, res) {
 
             // Add the text and href of every link, and save them
             result.title = $(this)
+                // .children("h3")
                 .children("a")
-                .text();
+                .attr("title");
             result.link = $(this)
+                // .children("h3")
                 .children("a")
                 .attr("href");
 
