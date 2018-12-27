@@ -163,6 +163,16 @@ app.post("/articles/:id", function (req, res) {
         });
 });
 
+//Route for saving an article
+app.get("/save/:id", function (req, res) {
+    db.Article
+    .findOneAndUpdate({_id: req.params.id},{saved: true}, function() {
+        console.log("saved");
+    });
+});
+
+    
+
 // Start the server
 app.listen(PORT, function () {
     console.log("App running on port " + PORT + "!");

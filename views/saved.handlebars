@@ -1,11 +1,13 @@
 <h1>Your Saved Articles</h1>
+<button class="btn-primary" href="/">Back to Articles</button>
+
 
 {{#each articles}}
     {{#if saved}}
         <a href="{{link}}" target="_blank">
         <h3>{{title}}</h3>
         </a>
-    <button class="btn-danger">Delete</button>
-    <button class="btn-warning">Note</button>
+    <button article_id="{{_id}}" title="{{title}}" class="btn-danger">Delete</button>
+    <button article_id="{{_id}}" title="{{title}}" class="btn-warning">Note</button>
     {{/if}}
 {{/each}}
