@@ -1,7 +1,15 @@
 $(document).ready(function () {
 
-    $(document).on("click", "#scrape", function () {
-        console.log("it clicked");
+    $(document).on("click", "#scrape", function (event) {
+        event.preventDefault();
+        $.ajax({
+                url: "/scrape",
+                type: "GET"
+            })
+            .then(function () {
+                console.log("scraped new articles");
+            });
+        location.reload();
     });
 
     //on click event that will change boolean to save article 
@@ -20,9 +28,19 @@ $(document).ready(function () {
             .then(function () {
                 console.log("saved article", savedState)
             });
-            location.reload();
-        });
-        
+        location.reload();
+    });
+
+    $("#saved").on("click", function (event) {
+        window.location.replace("/saved");
+    });
+
+    $("#articles").on("click", function (event) {
+        window.location.replace("/");
+    });
+
+
+
 
 
 

@@ -87,16 +87,37 @@ app.get("/scrape", function (req, res) {
                 // .children("h3")
                 .children("a")
                 .attr("href");
-
+            //Verify if the article already exists in database
+            db.Article.find({}, function(error, dbArticle) {//Error first callback
+                console.log(dbArticle);
+                if(dbArticle.length === 0) {
+                    db.Article.create(result);
+                }
+                else {
+                    let flag = false;
+                    for (let i =0; i<dbArticle.length; i++){
+                        if(dbArticle[i].title === result.title){
+                            flag = false;
+                            break;
+                        }
+                        else {
+                            flag = true;
+                        }
+                    }
+                    if(flag) {
+                        db.Article.create(result);
+                    }
+                }
+            });
             //Create a new article using the 'result' object built from scraping
-            db.Article.create(result)
-                .then(function (dbArticle) {
-                    console.log(dbArticle);
-                })
-                .catch(function (err) {
-                    //If an error occurred, log it
-                    console.log(err);
-                });
+            // db.Article.create(result)
+            //     .then(function (dbArticle) {
+            //         console.log(dbArticle);
+            //     })
+            //     .catch(function (err) {
+            //         //If an error occurred, log it
+            //         console.log(err);
+            //     });
         });
 
         //send a message to the client
