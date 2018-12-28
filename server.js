@@ -192,6 +192,14 @@ app.get("/save/:id", function (req, res) {
     });
 });
 
+//Route for deleting an article
+app.get("/delete/:id", function (req, res) {
+    db.Article
+    .findOneAndUpdate({_id: req.params.id},{saved: false}, function() {
+        console.log("deleted");
+    });
+});
+
     
 
 // Start the server

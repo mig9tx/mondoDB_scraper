@@ -9,7 +9,8 @@ $(document).ready(function () {
             .then(function () {
                 console.log("scraped new articles");
             });
-        location.reload();
+
+        window.location.reload();
     });
 
     //on click event that will change boolean to save article 
@@ -28,6 +29,7 @@ $(document).ready(function () {
             .then(function () {
                 console.log("saved article", savedState)
             });
+
         location.reload();
     });
 
@@ -37,6 +39,25 @@ $(document).ready(function () {
 
     $("#articles").on("click", function (event) {
         window.location.replace("/");
+    });
+
+    //on click to delete an article from saved
+    $(".delete").on("click", function (evnet) {
+        event.preventDefault();
+        let thisId = $(this).attr("article_id");
+        console.log(thisId);
+        let savedState = {
+            saved: false
+        };
+
+        $.ajax({
+            url: "/delete/" + thisId,
+            type: "GET",
+            data: savedState
+        });
+
+        location.reload();
+
     });
 
 
