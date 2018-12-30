@@ -60,8 +60,68 @@ $(document).ready(function () {
 
     });
 
+    //Click event to open note modal and show notes
+    $(".addNote").on("click", function (event) {
 
+        $("#noteArea").empty();
+        let thisId = $(this).attr("article_id");
+        console.log(thisId + "line 68 app.js")
+        $.ajax({
+                method: "GET",
+                url: "/articles/" + thisId
+            })
+            .then(function (data) {
+                console.log(data);
+                $(".modal-title").text(data.title);
+                console.log(data._id);
+                $("#deleteNote").attr("article_id", data._id);
+                $("#saveNote").attr("article_id", data._id);
+                if (data.note) {
+                    console.log(data.note.title);
+                    $("#noteArea").append("<h4>Title: " + data.note.title + "</h4>");
+                    $("#noteArea").append("<p>Note: " + data.note.body + "</p>");
+                }
+            });
+    });
 
+    //Click event to save a note for an article
+    $("#saveNote").on("click", function (event) {
+        //grab article_id from button attribute
+        let thisId = $(this).attr("article_id");
+        console.log(thisId);
+
+        //Run a POST request to change the note, using what's entered in the input boxes
+        $.ajax({
+                method: "POST",
+                url: "/articles/" + thisId,
+                data: {
+                    title: $("#noteTitle").val(),
+                    body: $("#noteBody").val()
+                }
+            })
+            .then(function (data) {
+                // Log the response
+                console.log(data);
+            });
+            $("#noteTitle").val("");
+            $("#noteBody").val("");
+    });
+
+    //Click event to delete a note for an article
+    $("#deleteNote").on("click", function (event) {
+        let thisId = $(this).attr("article_id");
+        console.log(thisId);
+
+        $.ajax({
+            method: "GET",
+            url: "/articles/" + thisId,
+        })
+        .then (function (data){
+            console.log(data.note)
+            console.log(data);
+        }
+        )
+    })
 
 
 

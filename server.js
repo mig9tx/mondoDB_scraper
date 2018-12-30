@@ -198,9 +198,7 @@ app.get("/delete/:id", function (req, res) {
     .findOneAndUpdate({_id: req.params.id},{saved: false}, function() {
         console.log("deleted");
     });
-});
-
-    
+});    
 
 // Start the server
 app.listen(PORT, function () {

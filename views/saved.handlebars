@@ -1,14 +1,37 @@
 <div class="jumbotron"></div>
 <h1>Your Saved Articles</h1>
-<button class="btn-primary" id="articles"<>Back to Articles</button>
+<button class="btn-primary" id="articles" <>Back to Articles</button>
 
 
 {{#each articles}}
-    {{#if saved}}
-        <a href="{{link}}" target="_blank">
-        <h3>{{title}}</h3>
-        </a>
-    <button article_id="{{_id}}" title="{{title}}" class="btn-danger delete" >Delete</button>
-    <button article_id="{{_id}}" title="{{title}}" class="btn-warning addNote">Note</button>
-    {{/if}}
+{{#if saved}}
+<a href="{{link}}" target="_blank">
+    <h3>{{title}}</h3>
+</a>
+<button article_id="{{_id}}" title="{{title}}" class="btn-danger delete">Delete</button>
+<button article_id="{{_id}}" title="{{title}}" class="btn-warning addNote" data-toggle="modal" data-target="#noteModal">Note</button>
+{{/if}}
 {{/each}}
+
+<div id="noteModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title"></h4>
+                <button type="button" class="close" data-dismiss="modal">&times;
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <input type="text" id="noteTitle" class="noteInput" placeholder="Enter Title">
+                <input type="text" id="noteBody" class="noteInput" placeholder="Enter Note">
+                <div id="noteArea"></div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal" id="deleteNote">Delete Note</button>
+                <button type="button" class="btn btn-success" data-dismiss="modal" id="saveNote">Save Note</button>
+            </div>
+        </div>
+    </div>
+</div>
