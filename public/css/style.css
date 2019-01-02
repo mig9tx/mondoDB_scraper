@@ -1,0 +1,10 @@
+.jumbotron {
+    background-image: url(../images/good-news.jpg);
+    margin-bottom: 0px;
+    background-position: 50% 50%;
+    background-size: auto;
+    background-repeat: no-repeat;
+    color: white;
+    text-shadow: black 0.3em 0.3em 0.3em;
+    height: 350px;
+}
