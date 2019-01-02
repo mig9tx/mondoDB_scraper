@@ -10,7 +10,7 @@ $(document).ready(function () {
                 console.log("scraped new articles");
             });
 
-        window.location.reload();
+        location.reload();
     });
 
     //on click event that will change boolean to save article 
@@ -88,6 +88,7 @@ $(document).ready(function () {
                 $("#saveNote").attr("article_id", data._id);
                 };
             });
+            
     });
 
     //Click event to save a note for an article

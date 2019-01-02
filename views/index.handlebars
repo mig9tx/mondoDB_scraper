@@ -1,26 +1,30 @@
-<div class="jumbotron">
+<div class="container">
+    <div class="jumbotron"></div>
 </div>
 
+<div class="container">
+    <h1>Good News Article Scraper</h1>
+    <p>Tired of the same old bad news? We are too. Welcome to the Good News Article Scraper. Click on the button below
+        to find articles
+        that will keep your mind and soul inspired, make you smile and give you hope in the future of humanity. Sit
+        back, take a break, get some
+        hot cocoa or coffee and relax with us for 10-30 minutes. Come back whenevery you need another break or
+        enlightening story.
+    </p>
+    <div class="row">
+        <button class="btn-primary" id="scrape">Scrape Articles</button>
+
+        <button class="btn-primary" id="saved">Saved Articles</button>
+    </div>
 </div>
 
-<h1>Good News Article Scraper</h1>
-<p>Tired of the same old bad news? We are too. Welcome to the Good News Article Scraper. Click on the button below
-    to find articles
-    that will keep your mind and soul inspired, make you smile and give you hope in the future of humanity. Sit
-    back, take a break, get some
-    hot cocoa or coffee and relax with us for 10-30 minutes. Come back whenevery you need another break or
-    enlightening story.
-</p>
-<button class="btn-primary" id="scrape">Good News</button>
+<div class="container">
+    {{#each articles}}
+    {{#unless saved}}
+    <a href="{{link}}" target="_blank">
+        <h3>{{title}}</h3>
+    </a>
+    <button article_id="{{_id}}" title="{{title}}" class="saveArticle btn-success">Save Article</button>
+    {{/unless}}
+    {{/each}}
 </div>
-<button class="btn-primary" id="saved">Saved Articles</button>
-
-
-{{#each articles}}
-{{#unless saved}}
-<a href="{{link}}" target="_blank">
-    <h3>{{title}}</h3>
-</a>
-<button article_id="{{_id}}" title="{{title}}" class="saveArticle btn-success">Save Article</button>
-{{/unless}}
-{{/each}}
