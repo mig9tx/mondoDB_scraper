@@ -12,13 +12,14 @@
         enlightening story.
     </p>
     <div class="row">
-        <button class="btn-primary" id="scrape">Scrape Articles</button>
+        <button class="btn-primary" id="scrape" onClick="window.location.reload()">Scrape Articles</button>
 
         <button class="btn-primary" id="saved">Saved Articles</button>
     </div>
 </div>
 
 <div class="container">
+    <div id="results">
     {{#each articles}}
     {{#unless saved}}
     <a href="{{link}}" target="_blank">
@@ -27,4 +28,5 @@
     <button article_id="{{_id}}" title="{{title}}" class="saveArticle btn-success">Save Article</button>
     {{/unless}}
     {{/each}}
+    </div>
 </div>

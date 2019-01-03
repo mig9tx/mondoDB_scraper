@@ -1,7 +1,12 @@
 $(document).ready(function () {
 
+    function refreshPage(){
+        window.location.reload();
+    }
+
     $(document).on("click", "#scrape", function (event) {
         event.preventDefault();
+        $("#results").empty();
         $.ajax({
                 url: "/scrape",
                 type: "GET"
@@ -10,7 +15,7 @@ $(document).ready(function () {
                 console.log("scraped new articles");
             });
 
-        location.reload();
+            window.location.reload();
     });
 
     //on click event that will change boolean to save article 
